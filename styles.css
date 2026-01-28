@@ -4,7 +4,7 @@
    ============================ */
 
 :root{
-  --bg: url("https://xatimg.com/image/cRIIcSwomz3o.jpg");
+  --bg: url("https://xatimg.com/image/c24IrTNvpHsc.jpg");
 
   --ink: rgba(255,255,255,.92);
   --muted: rgba(255,255,255,.68);
@@ -647,4 +647,8 @@ html[data-theme="light"] .castItem{ background: rgba(255,255,255,.22); border-co
 @media (max-width: 520px){
   .frame img{ height: 240px; }
   .nav{ width: 48px; height: 48px; font-size: 32px; }
+}
+
+#miniAudio{
+  display:none;
 }
