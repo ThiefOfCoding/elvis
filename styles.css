@@ -4,7 +4,7 @@
    ============================ */
 
 :root{
-  --bg: url("https://xatimg.com/image/cRIIcSwomz3o.jpg");
+  --bg: url("https://xatimg.com/image/c24IrTNvpHsc.jpg");
 
   --ink: rgba(255,255,255,.92);
   --muted: rgba(255,255,255,.68);
@@ -648,7 +648,129 @@ html[data-theme="light"] .castItem{ background: rgba(255,255,255,.22); border-co
   .frame img{ height: 240px; }
   .nav{ width: 48px; height: 48px; font-size: 32px; }
 }
+/* ===== Mini YouTube Player (glass) ===== */
+.ytp{
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2200;
+  user-select:none;
+}
 
-#miniAudio{
-  display:none;
+.ytpCard{
+  position: relative;
+  display:flex;
+  align-items:center;
+  gap: 12px;
+  padding: 12px 12px;
+  width: min(420px, calc(100vw - 32px));
+  border-radius: 22px;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--glassA), var(--glassB));
+  backdrop-filter: blur(var(--blur));
+  box-shadow: 0 30px 110px rgba(0,0,0,.55);
+  overflow:hidden;
+}
+
+.ytpCard::before{
+  content:"";
+  position:absolute; inset:-2px;
+  background:
+    radial-gradient(420px 120px at 20% 0%, rgba(255,255,255,.16), transparent 60%),
+    linear-gradient(90deg, rgba(255,40,120,.18), rgba(255,180,80,.12), rgba(120,110,255,.12));
+  opacity:.65;
+  pointer-events:none;
+}
+
+.ytpBadge{
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(0,0,0,.16);
+  display:grid;
+  place-items:center;
+  font-weight: 1000;
+  box-shadow: 0 14px 40px rgba(0,0,0,.35);
+}
+
+html[data-theme="light"] .ytpBadge{
+  background: rgba(255,255,255,.28);
+}
+
+.ytpMeta{
+  flex: 1 1 auto;
+  min-width: 0;
+  position: relative;
+}
+
+.ytpTitle{
+  font-weight: 1000;
+  letter-spacing:.18em;
+  text-transform: uppercase;
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.ytpTrack{
+  margin-top: 2px;
+  font-weight: 1000;
+  letter-spacing:.08em;
+  text-transform: uppercase;
+  font-size: 11px;
+  white-space: nowrap;
+  overflow:hidden;
+  text-overflow: ellipsis;
+}
+
+.ytpHint{
+  margin-top: 6px;
+  font-weight: 900;
+  letter-spacing:.12em;
+  text-transform: uppercase;
+  font-size: 10px;
+  color: var(--muted);
+  opacity: .85;
+}
+
+.ytpBtns{
+  display:flex;
+  gap: 8px;
+  position: relative;
+}
+
+.ytpBtn{
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.10);
+  color: var(--ink);
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  font-weight: 1000;
+  box-shadow: 0 12px 36px rgba(0,0,0,.22);
+  transition: transform 220ms cubic-bezier(.2,.9,.2,1), background 220ms;
+  text-decoration:none;
+}
+
+.ytpBtn:hover{
+  transform: translateY(-2px);
+  background: rgba(255,255,255,.14);
+}
+
+/* Keep iframe alive but invisible/off-screen */
+.ytpFrame{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+  left: -9999px;
+  top: -9999px;
+}
+
+@media (max-width: 520px){
+  .ytp{ right: 12px; bottom: 12px; }
 }
