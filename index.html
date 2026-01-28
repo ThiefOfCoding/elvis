@@ -157,30 +157,34 @@
     </div>
   </div>
 
-  <!-- ================= MINI AUDIO PLAYER (BOTTOM CORNER) ================= -->
-  <div class="miniPlayer" id="miniPlayer" aria-label="Mini music player">
-    <div class="miniPlayerInner">
+  <!-- Mini YouTube Player (autoplay muted) -->
+<div class="ytp" id="ytp" aria-label="Mini YouTube player">
+  <div class="ytpCard">
+    <div class="ytpBadge" aria-hidden="true">♪</div>
 
-      <div class="miniThumb" aria-hidden="true"></div>
-
-      <div class="miniMeta">
-        <div class="miniTitle">Now Playing</div>
-        <div class="miniTrack">Elvis — Malote!</div>
-      </div>
-
-      <div class="miniBtns">
-        <button class="miniBtn" id="mpPlay" type="button" aria-label="Play/Pause">▶</button>
-        <button class="miniBtn" id="mpMute" type="button" aria-label="Mute/Unmute">🔇</button>
-      </div>
-
-      <!-- Audio file hosted in your repo: /audio/malote.mp3 -->
-      <audio id="miniAudio" preload="metadata" loop>
-        <source src="audio/malote.mp3" type="audio/mpeg">
-      </audio>
-
+    <div class="ytpMeta">
+      <div class="ytpTitle">Now Playing</div>
+      <div class="ytpTrack">Elvis — Malote!</div>
+      <div class="ytpHint" id="ytpHint">Autoplay starts muted (browser rule).</div>
     </div>
+
+    <div class="ytpBtns">
+      <button class="ytpBtn" id="ytpMute" type="button" aria-label="Mute/Unmute">🔇</button>
+      <a class="ytpBtn" id="ytpOpen" href="https://www.youtube.com/watch?v=izGwDsrQ1eQ" target="_blank" rel="noopener" aria-label="Open on YouTube">↗</a>
+    </div>
+
+    <!-- Hidden iframe (audio source) -->
+    <iframe
+      id="ytpFrame"
+      class="ytpFrame"
+      src="https://www.youtube.com/embed/izGwDsrQ1eQ?autoplay=1&mute=1&loop=1&playlist=izGwDsrQ1eQ&playsinline=1&controls=0&rel=0&modestbranding=1"
+      title="YouTube audio"
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      referrerpolicy="strict-origin-when-cross-origin"
+    ></iframe>
   </div>
-  <!-- ==================================================================== -->
+</div>
 
   <script src="script.js"></script>
 </body>
