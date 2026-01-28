@@ -515,197 +515,43 @@
   });
 })();
 
-/* ===== Mini YouTube Player (audio) ===== */
+/* ===== Mini YouTube Player controls (no API) ===== */
 (() => {
-  const VIDEO_ID = "izGwDsrQ1eQ";
+  const frame = document.getElementById("ytpFrame");
+  const btnMute = document.getElementById("ytpMute");
+  const hint = document.getElementById("ytpHint");
 
-  const mpPlay = document.getElementById("mpPlay");
-  const mpMute = document.getElementById("mpMute");
-  const mpRoot = document.getElementById("miniPlayer");
+  if (!frame || !btnMute) return;
 
-  let ytPlayer = null;
-  let isReady = false;
-  let isMuted = true;
+  const base = "https://www.youtube.com/embed/izGwDsrQ1eQ";
+  const common = "autoplay=1&loop=1&playlist=izGwDsrQ1eQ&playsinline=1&controls=0&rel=0&modestbranding=1";
 
-  function setPlayIcon(isPlaying) {
-    if (!mpPlay) return;
-    mpPlay.textContent = isPlaying ? "❚❚" : "▶";
+  let muted = true;
+
+  function setMutedUI() {
+    btnMute.textContent = muted ? "🔇" : "🔊";
+    if (hint) hint.textContent = muted ? "Autoplay starts muted (browser rule)." : "Sound on.";
   }
 
-  function setMuteIcon(muted) {
-    if (!mpMute) return;
-    mpMute.textContent = muted ? "🔇" : "🔊";
+  function setFrame(muteVal) {
+    // Reload iframe with mute setting
+    frame.src = `${base}?${common}&mute=${muteVal ? 1 : 0}`;
   }
 
-  // YouTube IFrame API calls this automatically
-  window.onYouTubeIframeAPIReady = function () {
-    const host = document.getElementById("miniYT");
-    if (!host) return;
-
-    ytPlayer = new YT.Player(host, {
-      width: "1",
-      height: "1",
-      videoId: VIDEO_ID,
-      playerVars: {
-        autoplay: 0,
-        controls: 0,
-        rel: 0,
-        modestbranding: 1,
-        playsinline: 1,
-        fs: 0,
-        iv_load_policy: 3
-      },
-      events: {
-        onReady: () => {
-          isReady = true;
-
-          // start muted (autoplay policies are strict)
-          ytPlayer.mute();
-          isMuted = true;
-          setMuteIcon(true);
-
-          // restore last state (optional)
-          try {
-            const saved = JSON.parse(localStorage.getItem("miniPlayerState") || "{}");
-            if (typeof saved.muted === "boolean") {
-              isMuted = saved.muted;
-              if (isMuted) ytPlayer.mute(); else ytPlayer.unMute();
-              setMuteIcon(isMuted);
-            }
-            if (typeof saved.time === "number" && saved.time > 0) {
-              ytPlayer.seekTo(saved.time, true);
-            }
-          } catch {}
-        },
-        onStateChange: (e) => {
-          // 1 = playing, 2 = paused, 0 = ended
-          if (e.data === YT.PlayerState.PLAYING) setPlayIcon(true);
-          if (e.data === YT.PlayerState.PAUSED) setPlayIcon(false);
-          if (e.data === YT.PlayerState.ENDED) setPlayIcon(false);
-        }
-      }
-    });
-  };
-
-  // Play/Pause
-  mpPlay?.addEventListener("click", () => {
-    if (!isReady || !ytPlayer) return;
-
-    const state = ytPlayer.getPlayerState();
-    if (state === YT.PlayerState.PLAYING) {
-      ytPlayer.pauseVideo();
-      setPlayIcon(false);
-    } else {
-      // For best compatibility, user click starts playback
-      ytPlayer.playVideo();
-      setPlayIcon(true);
-    }
-  });
-
-  // Mute/Unmute
-  mpMute?.addEventListener("click", () => {
-    if (!isReady || !ytPlayer) return;
-
-    isMuted = !isMuted;
-    if (isMuted) ytPlayer.mute();
-    else ytPlayer.unMute();
-
-    setMuteIcon(isMuted);
-
-    try {
-      const saved = JSON.parse(localStorage.getItem("miniPlayerState") || "{}");
-      saved.muted = isMuted;
-      localStorage.setItem("miniPlayerState", JSON.stringify(saved));
-    } catch {}
-  });
-
-  // Save time occasionally so it resumes where it left off
-  setInterval(() => {
-    if (!isReady || !ytPlayer) return;
-    try {
-      const t = ytPlayer.getCurrentTime?.();
-      if (typeof t === "number") {
-        const saved = JSON.parse(localStorage.getItem("miniPlayerState") || "{}");
-        saved.time = t;
-        localStorage.setItem("miniPlayerState", JSON.stringify(saved));
-      }
-    } catch {}
-  }, 4000);
-
-  // Safety: if user closes tab, try saving time once more
-  window.addEventListener("beforeunload", () => {
-    if (!isReady || !ytPlayer) return;
-    try {
-      const t = ytPlayer.getCurrentTime?.();
-      const saved = JSON.parse(localStorage.getItem("miniPlayerState") || "{}");
-      saved.time = typeof t === "number" ? t : saved.time || 0;
-      saved.muted = isMuted;
-      localStorage.setItem("miniPlayerState", JSON.stringify(saved));
-    } catch {}
-  });
-
-  // If someone wants to hide it later, you can toggle this:
-  // mpRoot.style.display = "none";
-})();
-
-/* ===== Mini Audio Player (<audio>) ===== */
-(() => {
-  const audio = document.getElementById("miniAudio");
-  const playBtn = document.getElementById("mpPlay");
-  const muteBtn = document.getElementById("mpMute");
-
-  if (!audio || !playBtn || !muteBtn) return;
-
-  function setPlayIcon(playing){
-    playBtn.textContent = playing ? "❚❚" : "▶";
-  }
-
-  function setMuteIcon(muted){
-    muteBtn.textContent = muted ? "🔇" : "🔊";
-  }
-
-  // Restore previous state
+  // Try to remember user preference
   try {
-    const saved = JSON.parse(localStorage.getItem("miniAudioState") || "{}");
-    if (typeof saved.muted === "boolean") audio.muted = saved.muted;
-    if (typeof saved.time === "number") audio.currentTime = saved.time;
-    setMuteIcon(audio.muted);
+    const saved = localStorage.getItem("ytpMuted");
+    if (saved === "0") muted = false;
   } catch {}
 
-  // Play / Pause
-  playBtn.addEventListener("click", () => {
-    if (audio.paused) {
-      audio.play().catch(() => {});
-      setPlayIcon(true);
-    } else {
-      audio.pause();
-      setPlayIcon(false);
-    }
-  });
+  // Ensure autoplay happens (muted is most reliable)
+  setFrame(muted);
+  setMutedUI();
 
-  // Mute / Unmute
-  muteBtn.addEventListener("click", () => {
-    audio.muted = !audio.muted;
-    setMuteIcon(audio.muted);
-    saveState();
-  });
-
-  // Save playback state
-  function saveState(){
-    try {
-      localStorage.setItem(
-        "miniAudioState",
-        JSON.stringify({
-          muted: audio.muted,
-          time: audio.currentTime
-        })
-      );
-    } catch {}
-  }
-
-  setInterval(saveState, 4000);
-
-  audio.addEventListener("ended", () => {
-    setPlayIcon(false);
+  btnMute.addEventListener("click", () => {
+    muted = !muted;
+    setFrame(muted);
+    setMutedUI();
+    try { localStorage.setItem("ytpMuted", muted ? "1" : "0"); } catch {}
   });
 })();
