@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Elvis - Malote!</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Background stage -->
+  <div class="stage" aria-hidden="true">
+    <div class="bg"></div>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+    <div class="flicker"></div>
+    <div class="beam beam-l"></div>
+    <div class="beam beam-r"></div>
+    <canvas id="sparks" class="sparks"></canvas>
+  </div>
+
+  <!-- Unconventional filmstrip frame -->
+  <main class="filmstrip" id="filmstrip">
+    <aside class="perfs" aria-hidden="true">
+      <span class="perf"></span><span class="perf"></span><span class="perf"></span><span class="perf"></span>
+      <span class="perf"></span><span class="perf"></span><span class="perf"></span><span class="perf"></span>
+      <span class="perf"></span><span class="perf"></span><span class="perf"></span><span class="perf"></span>
+    </aside>
+
+    <section class="reel" id="reel">
+      <div class="plasma" aria-hidden="true"></div>
+      <div class="gloss" aria-hidden="true"></div>
+
+      <!-- Opening credits -->
+      <header class="credits">
+        <div class="tag">NOW PRESENTING</div>
+        <h1 class="title" id="title">ELVIS - MALOTE!</h1>
+        <div class="tag sub" id="subtitle">DARIO ♥</div>
+      </header>
+
+      <!-- Profile frame -->
+      <section class="profile">
+        <div class="portraitWrap">
+          <div class="portraitRing" aria-hidden="true"></div>
+          <img class="portrait" src="https://xatimg.com/image/Gd4om9geMpxp.jpg" alt="Profile image" />
+          <div class="stamp" aria-hidden="true">RATED ★★★★★</div>
+        </div>
+
+        <div class="bioBlock">
+          <p class="bio">
+            
+          </p>
+
+          <div class="stats">
+            <div class="stat">
+              <div class="num" data-count="1200">1.2K</div>
+              <div class="lbl">Fans</div>
+            </div>
+            <div class="stat">
+              <div class="num" data-count="847">847</div>
+              <div class="lbl">Cast</div>
+            </div>
+            <div class="stat">
+              <div class="num" data-count="42">42</div>
+              <div class="lbl">Scenes</div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn" id="btnFriends" type="button">
+              <span class="btnIco">🎭</span> Friends
+            </button>
+            <button class="btn" id="btnPhotos" type="button">
+              <span class="btnIco">🎞</span> Photos
+            </button>
+            <a class="btn" href="https://xat.com/saoko" target="_blank" rel="noopener">
+              <span class="btnIco">🧷</span> Saoko
+            </a>
+          </div>
+
+          <button class="mode" id="btnMode" type="button" aria-label="Toggle dark/light mode">
+            <span class="modeDot" aria-hidden="true"></span>
+            <span class="modeText" id="modeText">Dark</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Tiny “now playing” ticker -->
+      <div class="ticker" aria-hidden="true">
+        <div class="tickerTrack">
+          <span>ELVIS ♥ </span><i></i>
+          <span>TEKI ♥</span><i></i>
+          <span>GOMI ♥</span><i></i>
+          <span>DARIO ♥</span><i></i>
+          <span>SAOKO ♥</span><i></i>
+          <span>FRANCO ♥</span><i></i>
+          <span>EPIKA ♥</span><i></i>
+          <span>ELVIS - MALOTE!</span><i></i>
+          <span>PITU ♥</span><i></i>
+          <span>SAOKO ♥</span><i></i>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Friends (Cast) modal -->
+  <div class="modal" id="modalFriends" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modalCard" role="document">
+      <div class="modalTop">
+        <h2>🎭 Friends (Cast)</h2>
+        <button class="iconBtn" type="button" data-close aria-label="Close">✕</button>
+      </div>
+
+      <div class="castGrid">
+        <div class="castItem"><img src="https://xatimg.com/image/Gd4om9geMpxp.jpg" alt=""><span>Gomi</span></div>
+        <div class="castItem"><img src="https://xatimg.com/image/Gd4om9geMpxp.jpg" alt=""><span>Teki</span></div>
+        <div class="castItem"><img src="https://xatimg.com/image/Gd4om9geMpxp.jpg" alt=""><span>Epika</span></div>
+        <div class="castItem"><img src="httpsatimg.com/image/Gd4om9geMpxp.jpg" alt=""><span>Pitu</span></div>
+        <div class="castItem"><img src="https://xatimg.com/image/Gd4om9geMpxp.jpg" alt=""><span>Franco</span></div>
+      </div>
+
+      <div class="modalBottom">
+        <button class="btnWide" type="button" data-close>Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Photos fullscreen gallery -->
+  <div class="gallery" id="gallery" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="galleryTop">
+      <div class="galleryTitle">🎞 Photos</div>
+      <button class="iconBtn" type="button" data-close-gallery aria-label="Close">✕</button>
+    </div>
+
+    <div class="galleryWall" id="galleryWall">
+      <button class="frame" type="button" data-img="https://xatimg.com/image/u1PEnLmuvFnS.jpg">
+        <img src="https://xatimg.com/image/u1PEnLmuvFnS.jpg" alt="Photo 1">
+      </button>
+      <button class="frame" type="button" data-img="https://xatimg.com/image/cRIIcSwomz3o.jpg">
+        <img src="https://xatimg.com/image/cRIIcSwomz3o.jpg" alt="Photo 2">
+      </button>
+      <button class="frame" type="button" data-img="https://xatimg.com/image/cIJA3VFpEugt.jpg">
+        <img src="https://xatimg.com/image/cIJA3VFpEugt.jpg" alt="Photo 3">
+      </button>
+      <button class="frame" type="button" data-img="https://xatimg.com/image/fay9BrkXw81J.jpg">
+        <img src="https://xatimg.com/image/fay9BrkXw81J.jpg" alt="Photo 4">
+      </button>
+    </div>
+
+    <!-- Lightbox viewer (huge) -->
+    <div class="lightbox" id="lightbox" aria-hidden="true">
+      <button class="nav prev" type="button" aria-label="Previous">‹</button>
+      <img id="lightboxImg" alt="Expanded photo">
+      <button class="nav next" type="button" aria-label="Next">›</button>
+      <button class="iconBtn lbClose" type="button" aria-label="Close">✕</button>
+      <div class="lbHint">ELVIS - MALOTE!</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
