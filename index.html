@@ -112,11 +112,11 @@
       </div>
 
       <div class="castGrid">
-        <div class="castItem"><img src="https://xatimg.com/image/P4OwFp1fvAwd.jpg" alt=""><span>Gomi</span></div>
-        <div class="castItem"><img src="https://xatimg.com/image/WYNXnQuyNV2S.jpg" alt=""><span>Teki</span></div>
-        <div class="castItem"><img src="https://xatimg.com/image/L11Vos9l2bsz.jpg" alt=""><span>Epika</span></div>
-        <div class="castItem"><img src="https://xatimg.com/image/oNNmzdq9Wx2r.jpg" alt=""><span>Pitu</span></div>
-        <div class="castItem"><img src="https://xatimg.com/image/LzJVRLo4tlNn.gif" alt=""><span>Franco</span></div>
+        <div class="castItem"><img src="https://xatimg.com/image/Gd4om9geMpxp.jpg" alt=""><span>Gomi</span></div>
+        <div class="castItem"><img src="https://xatimg.com/image/Gd4om9geMpxp.jpg" alt=""><span>Teki</span></div>
+        <div class="castItem"><img src="https://xatimg.com/image/Gd4om9geMpxp.jpg" alt=""><span>Epika</span></div>
+        <div class="castItem"><img src="httpsatimg.com/image/Gd4om9geMpxp.jpg" alt=""><span>Pitu</span></div>
+        <div class="castItem"><img src="https://xatimg.com/image/Gd4om9geMpxp.jpg" alt=""><span>Franco</span></div>
       </div>
 
       <div class="modalBottom">
@@ -156,6 +156,31 @@
       <div class="lbHint">ELVIS - MALOTE!</div>
     </div>
   </div>
+
+  <!-- ================= MINI AUDIO PLAYER (BOTTOM CORNER) ================= -->
+  <div class="miniPlayer" id="miniPlayer" aria-label="Mini music player">
+    <div class="miniPlayerInner">
+
+      <div class="miniThumb" aria-hidden="true"></div>
+
+      <div class="miniMeta">
+        <div class="miniTitle">Now Playing</div>
+        <div class="miniTrack">Elvis — Malote!</div>
+      </div>
+
+      <div class="miniBtns">
+        <button class="miniBtn" id="mpPlay" type="button" aria-label="Play/Pause">▶</button>
+        <button class="miniBtn" id="mpMute" type="button" aria-label="Mute/Unmute">🔇</button>
+      </div>
+
+      <!-- Audio file hosted in your repo: /audio/malote.mp3 -->
+      <audio id="miniAudio" preload="metadata" loop>
+        <source src="audio/malote.mp3" type="audio/mpeg">
+      </audio>
+
+    </div>
+  </div>
+  <!-- ==================================================================== -->
 
   <script src="script.js"></script>
 </body>
